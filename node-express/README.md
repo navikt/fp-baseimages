@@ -8,7 +8,7 @@ Docker image med Node og Express installert.
 ### docker run
 
 ```
-docker run --volume $(PWD)./:/var/server navikt/node-express
+docker run --volume $(PWD)./:/var/server ghcr.io/navikt/fp-baseimages/node-express
 ```
 
 ### docker-compose
@@ -17,7 +17,7 @@ For å bruke Docker-compose må man mounte inn js-filen som kjører express.
 
 ```
 docker-express:
-    image: navikt/node-express
+    image: ghcr.io/navikt/fp-baseimages/node-express
     volumes:
       - ./:/var/server/
     ports:
