@@ -4,7 +4,7 @@ node_targets = $(addprefix node-, $(NODE_VERSIONS))
 TEMURIN_VERSIONS = 17 18 19
 temurin_targets = $(addprefix temurin-, $(TEMURIN_VERSIONS))
 
-.PHONY: all $(java_targets) java-8-fat $(node_targets) $(python_targets) wildfly-17 $(temurin_targets)
+.PHONY: all $(node_targets) $(temurin_targets)
 
 all: $(node_targets) $(temurin_targets)
 
