@@ -4,65 +4,72 @@ if test -f /var/run/secrets/nais.io/defaultDSconfig/jdbc_url;
 then
   export DEFAULTDS_URL=$(cat /var/run/secrets/nais.io/defaultDSconfig/jdbc_url)
   export DVHDS_URL=$(echo $DEFAULTDS_URL)
-  echo "Setting DEFAULTDS_URL to $DEFAULTDS_URL"
+  echo "- exporting DEFAULTDS_URL to $DEFAULTDS_URL"
+  echo "- exporting DVHDS_URL to $DVHDS_URL"
 fi
 
 if test -f /var/run/secrets/nais.io/defaultDS/username;
 then
   export DEFAULTDS_USERNAME=$(cat /var/run/secrets/nais.io/defaultDS/username)
-  echo "Setting DEFAULTDS_USERNAME"
+  echo "- exporting DEFAULTDS_USERNAME"
 fi
 
 if test -f /var/run/secrets/nais.io/defaultDS/password;
 then
   export DEFAULTDS_PASSWORD=$(cat /var/run/secrets/nais.io/defaultDS/password)
-  echo "Setting DEFAULTDS_PASSWORD"
+  echo "- exporting DEFAULTDS_PASSWORD"
+fi
+
+if test -f /var/run/secrets/nais.io/dvhDSconfig/jdbc_url;
+then
+  export DVHDS_URL=$(cat /var/run/secrets/nais.io/dvhDSconfig/jdbc_url)
+  echo "- exporting DVHDS_URL to DVHDS_URL"
 fi
 
 if test -f /var/run/secrets/nais.io/dvhDS/username;
 then
   export DVHDS_USERNAME=$(cat /var/run/secrets/nais.io/dvhDS/username)
-  echo "Setting DVHDS_USERNAME"
+  echo "- exporting DVHDS_USERNAME"
 fi
 
 if test -f /var/run/secrets/nais.io/dvhDS/password;
 then
   export DVHDS_PASSWORD=$(cat /var/run/secrets/nais.io/dvhDS/password)
-  echo "Setting DVHDS_PASSWORD"
+  echo "- exporting DVHDS_PASSWORD"
 fi
 
 if test -f /var/run/secrets/nais.io/serviceuser/username;
 then
   export SYSTEMBRUKER_USERNAME=$(cat /var/run/secrets/nais.io/serviceuser/username)
-  echo "Setting SYSTEMBRUKER_USERNAME"
+  echo "- exporting SYSTEMBRUKER_USERNAME"
 fi
 
 if test -f /var/run/secrets/nais.io/serviceuser/password;
 then
   export SYSTEMBRUKER_PASSWORD=$(cat /var/run/secrets/nais.io/serviceuser/password)
-  echo "Setting SYSTEMBRUKER_PASSWORD"
+  echo "- exporting SYSTEMBRUKER_PASSWORD"
 fi
 
 if test -f /var/run/secrets/nais.io/ldap/username;
 then
   export LDAP_USERNAME=$(cat /var/run/secrets/nais.io/ldap/username)
-  echo "Setting LDAP_USERNAME"
+  echo "- exporting LDAP_USERNAME"
 fi
 
 if test -f /var/run/secrets/nais.io/ldap/password;
 then
   export LDAP_PASSWORD=$(cat /var/run/secrets/nais.io/ldap/password)
-  echo "Setting LDAP_PASSWORD"
+  echo "- exporting LDAP_PASSWORD"
 fi
 
 if test -f /var/run/secrets/nais.io/mq/username;
 then
   export MQ_USERNAME=$(cat /var/run/secrets/nais.io/mq/username)
-  echo "Setting MQ_USERNAME"
+  echo "- exporting MQ_USERNAME"
 fi
 
 if test -f /var/run/secrets/nais.io/mq/password;
 then
   export MQ_PASSWORD=$(cat /var/run/secrets/nais.io/mq/password)
-  echo "Setting MQ_PASSWORD"
+  echo "- exporting MQ_PASSWORD"
 fi
