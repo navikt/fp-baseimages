@@ -56,6 +56,12 @@ DVHDS_PASSWORD hvis montert under `/var/run/secrets/nais.io/dvhDS/password`
 ```
 
 ```shell script
+FPINFOSCHEMA_URL hvis montert under `/var/run/secrets/nais.io/fpinfoSchemaConfig/jdbc_url`
+FPINFOSCHEMA_USERNAME hvis montert under `/var/run/secrets/nais.io/fpinfoSchema/username`
+FPINFOSCHEMA_PASSWORD hvis montert under `/var/run/secrets/nais.io/fpinfoSchema/password`
+```
+
+```shell script
 SYSTEMBRUKER_USERNAME hvis montert under `/var/run/secrets/nais.io/serviceuser/username`
 SYSTEMBRUKER_PASSWORD hvis montert under `/var/run/secrets/nais.io/serviceuser/password`
 ```
