@@ -4,8 +4,10 @@ if test -f /var/run/secrets/nais.io/defaultDSconfig/jdbc_url;
 then
   export DEFAULTDS_URL=$(cat /var/run/secrets/nais.io/defaultDSconfig/jdbc_url)
   export DVHDS_URL=$(echo $DEFAULTDS_URL)
+  export FPINFOSCHEMA_URL=$(echo $DEFAULTDS_URL)
   echo "- exporting DEFAULTDS_URL to $DEFAULTDS_URL"
   echo "- exporting DVHDS_URL to $DVHDS_URL"
+  echo "- exporting FPINFOSCHEMA_URL til $FPINFOSCHEMA_URL"
 fi
 
 if test -f /var/run/secrets/nais.io/defaultDS/username;
@@ -23,7 +25,7 @@ fi
 if test -f /var/run/secrets/nais.io/dvhDSconfig/jdbc_url;
 then
   export DVHDS_URL=$(cat /var/run/secrets/nais.io/dvhDSconfig/jdbc_url)
-  echo "- exporting DVHDS_URL to DVHDS_URL"
+  echo "- exporting DVHDS_URL to $DVHDS_URL"
 fi
 
 if test -f /var/run/secrets/nais.io/dvhDS/username;
@@ -36,6 +38,25 @@ if test -f /var/run/secrets/nais.io/dvhDS/password;
 then
   export DVHDS_PASSWORD=$(cat /var/run/secrets/nais.io/dvhDS/password)
   echo "- exporting DVHDS_PASSWORD"
+fi
+
+if test -f /var/run/secrets/nais.io/fpinfoSchemaConfig/jdbc_url;
+then
+  export FPINFOSCHEMA_URL=$(cat /var/run/secrets/nais.io/fpinfoSchemaConfig/jdbc_url)
+  echo "- exporting FPINFOSCHEMA_URL to $FPINFOSCHEMA_URL"
+fi
+
+if test -f /var/run/secrets/nais.io/fpinfoSchema/username;
+then
+   export  FPINFOSCHEMA_USERNAME=$(cat /var/run/secrets/nais.io/fpinfoSchema/username)
+   echo "- exporting FPINFOSCHEMA_USERNAME"
+
+fi
+
+if test -f /var/run/secrets/nais.io/fpinfoSchema/password;
+then
+    export  FPINFOSCHEMA_PASSWORD=$(cat /var/run/secrets/nais.io/fpinfoSchema/password)
+    echo "- exporting FPINFOSCHEMA_PASSWORD"
 fi
 
 if test -f /var/run/secrets/nais.io/serviceuser/username;
