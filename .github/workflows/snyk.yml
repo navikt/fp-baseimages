@@ -24,18 +24,3 @@ jobs:
           command: monitor
           image: ghcr.io/${{ github.repository }}/{{matrix.image_version}}
           args: --org=teamforeldrepenger --project-name=${{ github.repository }}
-
-      - name: Run Trivy vulnerability scanner on docker image
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ghcr.io/${{ github.repository }}/{{matrix.image_version}}
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
-          format: 'sarif'
-          output: trivy-results-${{matrix.image_version}}.sarif
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: trivy-results-${{matrix.image_version}}.sarif
