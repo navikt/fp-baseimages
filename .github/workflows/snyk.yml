@@ -22,5 +22,5 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor
-          image: ghcr.io/${{ github.repository }}/{{matrix.image_version}}
+          image: ghcr.io/${{ github.repository }}/${{matrix.image_version}}
           args: --org=teamforeldrepenger --project-name=${{ github.repository }}
