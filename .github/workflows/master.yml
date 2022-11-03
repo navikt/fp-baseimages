@@ -12,6 +12,7 @@ on:
       - 'CODEOWNERS'
   schedule:
     - cron: '22 23 * * 2'
+  workflow_dispatch:
 
 env:
   IMAGE_JAVA: ghcr.io/${{ github.repository }}/java

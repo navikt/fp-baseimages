@@ -1,0 +1,41 @@
+name: Snyk vulnerabilities scanning of dependencies
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/snyk.yml'
+
+jobs:
+  snyk:
+    strategy:
+      matrix:
+        image_version: [ java:17, java:18, java:19, java:17-appdynamics, java:18-appdynamics, java:19-appdynamics, node-express:14, node-express:16, node-express:18 ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Snyk to check Docker images for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          image: ghcr.io/${{ github.repository }}/{{matrix.image_version}}
+          args: --org=teamforeldrepenger --project-name=${{ github.repository }}
+
+      - name: Run Trivy vulnerability scanner on docker image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ghcr.io/${{ github.repository }}/{{matrix.image_version}}
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+          format: 'sarif'
+          output: trivy-results-{{matrix.image_version}}.sarif
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: trivy-results-{{matrix.image_version}}.sarif
