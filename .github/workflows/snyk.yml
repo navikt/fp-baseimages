@@ -13,7 +13,7 @@ jobs:
   snyk:
     strategy:
       matrix:
-        image_version: [ java:17, java:18, java:19, java:17-appdynamics, java:18-appdynamics, java:19-appdynamics, node-express:14, node-express:16, node-express:18 ]
+        image_version: [ 'java:17', 'java:18', 'java:19', 'java:17-appdynamics', 'java:18-appdynamics', 'java:19-appdynamics', 'node-express:14', 'node-express:16', 'node-express:18' ]
     runs-on: ubuntu-latest
     steps:
       - name: Run Snyk to check Docker images for vulnerabilities
