@@ -1,4 +1,4 @@
-name: Build and deploy
+name: Build and deploy multiplatform
 
 on:
   push:
@@ -14,37 +14,103 @@ on:
     - cron: '22 23 * * 2'
   workflow_dispatch:
 
-env:
-  IMAGE_JAVA: ghcr.io/${{ github.repository }}/java
-  IMAGE_NODE: ghcr.io/${{ github.repository }}/node-express
-
 jobs:
-  build:
+  build-java:
+    strategy:
+      matrix:
+        version: [ '17', '18', '19' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Build all images
-        run: make -j
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # Use commit-sha1 instead of tag for security concerns
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push images
-        run: |
-          docker push ${IMAGE_JAVA}:17
-          docker push ${IMAGE_JAVA}:17-appdynamics
-          docker push ${IMAGE_JAVA}:18
-          docker push ${IMAGE_JAVA}:18-appdynamics
-          docker push ${IMAGE_JAVA}:19
-          docker push ${IMAGE_JAVA}:19-appdynamics
-          docker push ${IMAGE_NODE}:14
-          docker push ${IMAGE_NODE}:16
-          docker push ${IMAGE_NODE}:18
-          
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: java
+          platforms: linux/amd64,linux/arm64
+          build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
+          pull: true
+          push: true
+          tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  build-java-appd:
+    strategy:
+      matrix:
+        version: [ '17', '18', '19' ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v3
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: java/appdynamics
+          platforms: linux/amd64,linux/arm64
+          build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
+          pull: true
+          push: true
+          tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}-appdynamics
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  build-node:
+    strategy:
+      matrix:
+        version: [ '16', '18' ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: node-express
+          platforms: linux/amd64,linux/arm64
+          build-args: node_version=${{matrix.version}}
+          pull: true
+          push: true
+          tags: ghcr.io/${{ github.repository }}/node-express:${{matrix.version}}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
