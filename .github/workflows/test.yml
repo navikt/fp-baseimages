@@ -43,7 +43,7 @@ jobs:
           context: java
           platforms: linux/amd64,linux/arm64
           build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
-          push: false
+          push: true
           tags: ghcr.io/${{ github.repository }}/java-multiplatform:${{matrix.version}}
 
 
