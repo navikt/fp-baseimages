@@ -45,6 +45,7 @@ jobs:
           build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
           push: true
           tags: ghcr.io/${{ github.repository }}/java-multiplatform:${{matrix.version}}
-
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
 
