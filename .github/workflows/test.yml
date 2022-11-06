@@ -1,0 +1,52 @@
+name: Build and deploy multiplatform
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+      - '**.MD'
+      - '.gitignore'
+      - 'LICENCE'
+      - 'CODEOWNERS'
+  schedule:
+    - cron: '22 23 * * 2'
+  workflow_dispatch:
+
+env:
+  IMAGE_JAVA: ghcr.io/${{ github.repository }}/java-test
+
+jobs:
+  build-java:
+    strategy:
+      matrix:
+        version: [ '17', '17-appdynamics']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # Use commit-sha1 instead of tag for security concerns
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: false
+          tags: ${IMAGE_JAVA}:${{matrix.version}}
+
+
+
