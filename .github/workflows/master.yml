@@ -1,4 +1,4 @@
-name: Build and deploy multiplatform
+name: Build and deploy
 
 on:
   push:
