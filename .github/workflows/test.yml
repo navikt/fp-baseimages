@@ -18,7 +18,7 @@ jobs:
   build-java:
     strategy:
       matrix:
-        version: [ '17', '17-appdynamics']
+        version: [ '17' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -40,10 +40,10 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: java
           platforms: linux/amd64,linux/arm64
           push: false
-          tags: ghcr.io/${{ github.repository }}/java-test:${{matrix.version}}
+          tags: ghcr.io/${{ github.repository }}/java-multiplatform:${{matrix.version}}
 
 
 
