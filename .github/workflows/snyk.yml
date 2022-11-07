@@ -23,4 +23,4 @@ jobs:
         with:
           command: monitor
           image: ghcr.io/${{ github.repository }}/${{matrix.image_version}}
-          args: --org=teamforeldrepenger --project-name=${{ github.repository }}
+          args: --org=teamforeldrepenger --severity-threshold=critical --project-name=${{ github.repository }}
