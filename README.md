@@ -4,14 +4,14 @@ Base docker images for Foreldrepenger.
 Bygger videre på base images fra https://github.com/navikt/baseimages.
 
 Tilgjengelige images:
-* Adoptium Temurin LTS 17, 18 og 19 https://adoptium.net/ ([`java`](java))
-* Adoptium Temurin LTS 17, 18 og 19 med appdynamics støtte https://adoptium.net/ ([`java/appdynamics`](java/appdynamics))
-* Node 14, 16 and 18 with Express 4 ([`node-express`](node-express))
+* Adoptium Temurin LTS 17 og 19 https://adoptium.net/ ([`java`](java))
+* Adoptium Temurin LTS 17 og 19 med appdynamics støtte https://adoptium.net/ ([`java/appdynamics`](java/appdynamics))
+* Node 16, 18 and 19 ([`node-express`](node-express))
 
 ## Bygg lokalt
 ```shell script
 docker build -t java17-appdynamics --build-arg --build-arg base_image=eclipse-temurin:17-jre ./java/appdynamics
-docker build -t java18 --build-arg --build-arg base_image=eclipse-temurin:18-jre ./java
+docker build -t java19 --build-arg --build-arg base_image=eclipse-temurin:19-jre ./java
 ```
 ## Hvordan ta i bruk base image
 

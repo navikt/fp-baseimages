@@ -1,7 +1,7 @@
 name: Snyk vulnerabilities scanning of dependencies
 on:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '30 5 * * 3'
   workflow_dispatch:
   push:
     branches:
@@ -13,7 +13,7 @@ jobs:
   snyk:
     strategy:
       matrix:
-        image_version: [ 'java:17', 'java:18', 'java:19', 'java:17-appdynamics', 'java:18-appdynamics', 'java:19-appdynamics', 'node-express:14', 'node-express:16', 'node-express:18' ]
+        image_version: [ 'java:17', 'java:19', 'java:17-appdynamics', 'java:19-appdynamics', 'node-express:16', 'node-express:18', 'node-express:19' ]
     runs-on: ubuntu-latest
     steps:
       - name: Run Snyk to check Docker images for vulnerabilities

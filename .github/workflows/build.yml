@@ -3,7 +3,7 @@ name: Build and deploy
 on:
   push:
     branches:
-      - master
+      - '**'
     paths-ignore:
       - '**.md'
       - '**.MD'
@@ -18,7 +18,7 @@ jobs:
   build-java:
     strategy:
       matrix:
-        version: [ '17', '18', '19' ]
+        version: [ '17', '19' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -44,14 +44,15 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
           pull: true
-          push: true
+          push: ${{ github.ref_name == 'master' }}
           tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
   build-java-appd:
     strategy:
       matrix:
-        version: [ '17', '18', '19' ]
+        version: [ '17', '19' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -77,14 +78,15 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
           pull: true
-          push: true
+          push: ${{ github.ref_name == 'master' }}
           tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}-appdynamics
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
   build-node:
     strategy:
       matrix:
-        version: [ '16', '18' ]
+        version: [ '16', '18', '19' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -110,7 +112,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: node_version=${{matrix.version}}
           pull: true
-          push: true
+          push: ${{ github.ref_name == 'master' }}
           tags: ghcr.io/${{ github.repository }}/node-express:${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
