@@ -6,7 +6,6 @@ Bygger videre på base images fra https://github.com/navikt/baseimages.
 Tilgjengelige images:
 * Adoptium Temurin LTS 17 og 19 https://adoptium.net/ ([`java`](java))
 * Adoptium Temurin LTS 17 og 19 med appdynamics støtte https://adoptium.net/ ([`java/appdynamics`](java/appdynamics))
-* Node 16, 18 and 19 ([`node-express`](node-express))
 
 ## Bygg lokalt
 ```shell script
