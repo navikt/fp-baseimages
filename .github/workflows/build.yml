@@ -83,6 +83,17 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  trivy:
+    needs: build-java-appd
+    strategy:
+      matrix:
+        image_version: [ 'java:17-appdynamics', 'java:19-appdynamics' ]
+    name: Trivy
+    uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@rydding
+    with:
+      build-version: ${{matrix.image_version}}
+    secrets: inherit
+
   build-node:
     strategy:
       matrix:
