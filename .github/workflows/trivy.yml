@@ -7,7 +7,7 @@ on:
     branches:
       - master
     paths:
-      - '.github/workflows/snyk.yml'
+      - '.github/workflows/trivy.yml'
 
 jobs:
   trivy:
@@ -15,7 +15,7 @@ jobs:
       matrix:
         image_version: [ 'java:17-appdynamics', 'java:19-appdynamics' ]
     name: Trivy
-    uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@rydding
+    uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
       build-version: ${{matrix.image_version}}
     secrets: inherit
