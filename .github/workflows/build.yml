@@ -16,6 +16,9 @@ on:
 
 jobs:
   build-java:
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         version: [ '17', '19' ]
@@ -50,6 +53,9 @@ jobs:
           cache-to: type=gha,mode=max
 
   build-java-appd:
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         version: [ '17', '19' ]
