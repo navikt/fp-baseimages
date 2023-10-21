@@ -21,7 +21,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        version: [ '17', '19' ]
+        version: [ '17', '21' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -52,13 +52,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  build-java-appd:
+  build-java-17-appd:
     permissions:
       contents: read
       packages: write
-    strategy:
-      matrix:
-        version: [ '17', '19' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -82,22 +79,22 @@ jobs:
         with:
           context: java/appdynamics
           platforms: linux/amd64,linux/arm64
-          build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
+          build-args: base_image=eclipse-temurin:17-jre
           pull: true
           push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}-appdynamics
+          tags: ghcr.io/${{ github.repository }}/java:17-appdynamics
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
   trivy:
-    needs: build-java-appd
+    needs: [build-java-17-appd, build-java]
     permissions:
       actions: read
       contents: read
       security-events: write
     strategy:
       matrix:
-        image_version: [ 'java:17-appdynamics', 'java:19-appdynamics' ]
+        image_version: [ 'java:17-appdynamics', 'java:21' ]
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:

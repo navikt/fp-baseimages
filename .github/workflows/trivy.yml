@@ -17,7 +17,7 @@ jobs:
       security-events: write
     strategy:
       matrix:
-        image_version: [ 'java:17-appdynamics', 'java:19-appdynamics' ]
+        image_version: [ 'java:17-appdynamics', 'java:21' ]
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
