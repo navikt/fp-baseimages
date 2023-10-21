@@ -52,7 +52,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  build-java-appd:
+  build-java-17-appd:
     permissions:
       contents: read
       packages: write
@@ -87,7 +87,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   trivy:
-    needs: build-java-appd
+    needs: [build-java-17-appd, build-java]
     permissions:
       actions: read
       contents: read
