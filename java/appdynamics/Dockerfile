@@ -1,6 +1,6 @@
 ARG base_image
 
-FROM appdynamics/java-agent:22.3.0 AS appdynamics
+FROM appdynamics/java-agent:23.9.1 AS appdynamics
 RUN find /opt/appdynamics -type d -name argentoDynamicService -exec rm -rf {} +;
 
 FROM navikt/java:common AS java-common
@@ -19,7 +19,6 @@ COPY --chown=apprunner:root init-scripts/ /init-scripts
 
 RUN apt-get update && apt-get install -y locales
 
-
 RUN sed -i -e 's/# nb_NO.UTF-8 UTF-8/nb_NO.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
 ENV LC_ALL="nb_NO.UTF-8"
 ENV LANG="nb_NO.UTF-8"
@@ -34,10 +33,9 @@ ENV CLASSPATH="/app/WEB-INF/classes:/app/WEB-INF/lib/*"
 ENV APPDYNAMICS_AGENT_BASE_DIR=/tmp/appdynamics
 
 WORKDIR /app
-
-EXPOSE 8080
-
 RUN chown -R apprunner /app
+
 USER apprunner
 
+EXPOSE 8080
 ENTRYPOINT ["/dumb-init", "--", "/entrypoint.sh"]

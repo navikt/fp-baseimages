@@ -1,22 +1,25 @@
 # Foreldrepenger baseimage
 Base docker images for Foreldrepenger.
 
-Bygger videre på base images fra https://github.com/navikt/baseimages.
+Bruker en del konsepter fra https://github.com/navikt/baseimages , men bygger ikke på de produserte images derfra.
 
 Tilgjengelige images:
-* Adoptium Temurin LTS 17 og 19 https://adoptium.net/ ([`java`](java))
-* Adoptium Temurin LTS 17 og 19 med appdynamics støtte https://adoptium.net/ ([`java/appdynamics`](java/appdynamics))
+* Adoptium Temurin LTS 17 og 21 https://adoptium.net/ ([`java`](java))
+* Adoptium Temurin LTS 17 med AppDynamics støtte https://adoptium.net/ ([`java/appdynamics`](java/appdynamics))
+
+## OBS!
+* AppDynamics avsluttes utgangen av 2024 så de bygges ikke inn støtte for dette i LTS 21 utgaven av image.
 
 ## Bygg lokalt
 ```shell script
-docker build -t java17-appdynamics --build-arg --build-arg base_image=eclipse-temurin:17-jre ./java/appdynamics
-docker build -t java19 --build-arg --build-arg base_image=eclipse-temurin:19-jre ./java
+docker build -t java17-appdynamics --build-arg base_image=eclipse-temurin:17-jre ./java/appdynamics
+docker build -t java21 --build-arg base_image=eclipse-temurin:21-jre ./java
 ```
 ## Hvordan ta i bruk base image
 
 ### Java
 ```dockerfile
-FROM ghcr.io/navikt/fp-baseimages/java:<17|18|19>
+FROM ghcr.io/navikt/fp-baseimages/java:<17|21>
 COPY <path-to-jar> app.jar
 ```
 

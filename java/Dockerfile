@@ -18,16 +18,16 @@ RUN sed -i -e 's/# nb_NO.UTF-8 UTF-8/nb_NO.UTF-8 UTF-8/' /etc/locale.gen && loca
 ENV LC_ALL="nb_NO.UTF-8"
 ENV LANG="nb_NO.UTF-8"
 ENV TZ="Europe/Oslo"
+
 ENV APP_BINARY=app
 ENV APP_JAR=app.jar
 ENV MAIN_CLASS="Main"
 ENV CLASSPATH="/app/WEB-INF/classes:/app/WEB-INF/lib/*"
 
 WORKDIR /app
-
-EXPOSE 8080
-
 RUN chown -R apprunner /app
+
 USER apprunner
 
+EXPOSE 8080
 ENTRYPOINT ["/dumb-init", "--", "/entrypoint.sh"]
