@@ -5,14 +5,9 @@ Bruker en del konsepter fra https://github.com/navikt/baseimages , men bygger ik
 
 Tilgjengelige images:
 * Adoptium Temurin LTS 17 og 21 https://adoptium.net/ ([`java`](java))
-* Adoptium Temurin LTS 17 med AppDynamics støtte https://adoptium.net/ ([`java/appdynamics`](java/appdynamics))
-
-## OBS!
-* AppDynamics avsluttes utgangen av 2024 så de bygges ikke inn støtte for dette i LTS 21 utgaven av image.
 
 ## Bygg lokalt
 ```shell script
-docker build -t java17-appdynamics --build-arg base_image=eclipse-temurin:17-jre ./java/appdynamics
 docker build -t java21 --build-arg base_image=eclipse-temurin:21-jre ./java
 ```
 ## Hvordan ta i bruk base image
@@ -40,10 +35,6 @@ export JAVA_OPTS="${JAVA_OPTS} ${JAVA_PROXY_OPTIONS}"
 
 * Alle variabler definert som app properties i vault montert under `/var/run/secrets/nais.io/vault/*.env`
 
-* Konfigurerer appdynamics klienten om `/opt/appdynamics/javaagent.jar` finnes.
-
-* Importerer alle konfigurasjonsvariabler til appdynamics montert under `/var/run/secrets/nais.io/appdynamics/*.env`
-
 * Importerer føldende database brukere:
 ```shell script
 DEFAULTDS_URL hvis montert under `/var/run/secrets/nais.io/defaultDSconfig/jdbc_url`
@@ -55,12 +46,6 @@ DEFAULTDS_PASSWORD hvis montert under `/var/run/secrets/nais.io/defaultDS/passwo
 DVHDS_URL hvis montert under `/var/run/secrets/nais.io/dvhDSconfig/jdbc_url`
 DVHDS_USERNAME hvis montert under `/var/run/secrets/nais.io/dvhDS/username`
 DVHDS_PASSWORD hvis montert under `/var/run/secrets/nais.io/dvhDS/password`
-```
-
-```shell script
-FPINFOSCHEMA_URL hvis montert under `/var/run/secrets/nais.io/fpinfoSchemaConfig/jdbc_url`
-FPINFOSCHEMA_USERNAME hvis montert under `/var/run/secrets/nais.io/fpinfoSchema/username`
-FPINFOSCHEMA_PASSWORD hvis montert under `/var/run/secrets/nais.io/fpinfoSchema/password`
 ```
 
 ```shell script
