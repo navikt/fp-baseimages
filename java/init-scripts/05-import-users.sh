@@ -61,15 +61,3 @@ then
   export LDAP_PASSWORD=$(cat /var/run/secrets/nais.io/ldap/password)
   echo "- exporting LDAP_PASSWORD"
 fi
-
-if test -f /var/run/secrets/nais.io/mq/username;
-then
-  export MQ_USERNAME=$(cat /var/run/secrets/nais.io/mq/username)
-  echo "- exporting MQ_USERNAME"
-fi
-
-if test -f /var/run/secrets/nais.io/mq/password;
-then
-  export MQ_PASSWORD=$(cat /var/run/secrets/nais.io/mq/password)
-  echo "- exporting MQ_PASSWORD"
-fi

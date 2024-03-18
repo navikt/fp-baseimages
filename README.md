@@ -58,11 +58,6 @@ LDAP_USERNAME hvis montert under `/var/run/secrets/nais.io/ldap/username`
 LDAP_PASSWORD hvis montert under `/var/run/secrets/nais.io/ldap/password`
 ```
 
-```shell script
-MQ_USERNAME hvis montert under `/var/run/secrets/nais.io/mq/username`
-MQ_PASSWORD hvis montert under `/var/run/secrets/nais.io/mq/password`
-```
-
 * Setter opp remote debug om app kjører i dev cluster.
 ```shell script
 export JAVA_OPTS="${JAVA_OPTS} -Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=n"
