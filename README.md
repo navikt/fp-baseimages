@@ -4,17 +4,17 @@ Base docker images for Foreldrepenger.
 Bruker en del konsepter fra https://github.com/navikt/baseimages , men bygger ikke på de produserte images derfra.
 
 Tilgjengelige images:
-* Adoptium Temurin LTS 17 og 21 https://adoptium.net/ ([`java`](java))
+* Adoptium Temurin 17, 21, 22 https://adoptium.net/ ([`java`](java))
 
 ## Bygg lokalt
 ```shell script
-docker build -t java21 --build-arg base_image=eclipse-temurin:21-jre ./java
+docker build -t java22 --build-arg base_image=eclipse-temurin:22-jre ./java
 ```
 ## Hvordan ta i bruk base image
 
 ### Java
 ```dockerfile
-FROM ghcr.io/navikt/fp-baseimages/java:<17|21>
+FROM ghcr.io/navikt/fp-baseimages/java:<17|21|22>
 COPY <path-to-jar> app.jar
 ```
 

@@ -21,7 +21,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        version: [ '17', '21' ]
+        version: [ '17', '21', '22' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
