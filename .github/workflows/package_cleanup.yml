@@ -15,5 +15,4 @@ jobs:
         with:
           package-name: fp-baseimages/java
           package-type: container
-          min-versions-to-keep: 3
-          delete-only-untagged-versions: 'true'
+          min-versions-to-keep: 10
