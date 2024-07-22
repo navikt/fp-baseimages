@@ -34,14 +34,14 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@0d4c9c5ea7693da7b068278f7b52bda2a190a446
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: java
           platforms: linux/amd64,linux/arm64
