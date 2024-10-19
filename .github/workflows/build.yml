@@ -21,7 +21,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        version: [ '17', '21', '22' ]
+        version: [ '17', '21', '23' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -61,5 +61,5 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'java:21'
+      build-version: 'java:23'
     secrets: inherit
