@@ -4,17 +4,17 @@ Base docker images for Foreldrepenger.
 Bruker en del konsepter fra https://github.com/navikt/baseimages , men bygger ikke på de produserte images derfra.
 
 Tilgjengelige images:
-* Adoptium Temurin 17, 21, 22 https://adoptium.net/ ([`java`](java))
+* Adoptium Temurin 17, 21, 23 https://adoptium.net/ ([`java`](java))
 
 ## Bygg lokalt
 ```shell script
-docker build -t java22 --build-arg base_image=eclipse-temurin:22-jre ./java
+docker build -t java23 --build-arg base_image=eclipse-temurin:23-jre ./java
 ```
 ## Hvordan ta i bruk base image
 
 ### Java
 ```dockerfile
-FROM ghcr.io/navikt/fp-baseimages/java:<17|21|22>
+FROM ghcr.io/navikt/fp-baseimages/java:<17|21|23>
 COPY <path-to-jar> app.jar
 ```
 
@@ -51,11 +51,6 @@ DVHDS_PASSWORD hvis montert under `/var/run/secrets/nais.io/dvhDS/password`
 ```shell script
 SYSTEMBRUKER_USERNAME hvis montert under `/var/run/secrets/nais.io/serviceuser/username`
 SYSTEMBRUKER_PASSWORD hvis montert under `/var/run/secrets/nais.io/serviceuser/password`
-```
-
-```shell script
-LDAP_USERNAME hvis montert under `/var/run/secrets/nais.io/ldap/username`
-LDAP_PASSWORD hvis montert under `/var/run/secrets/nais.io/ldap/password`
 ```
 
 * Setter opp remote debug om app kjører i dev cluster.
