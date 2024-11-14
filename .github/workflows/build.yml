@@ -19,6 +19,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
     strategy:
       matrix:
         version: [ '17', '21', '23' ]
@@ -41,17 +42,21 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: nais/docker-build-push@v0
         with:
-          context: java
+          docker_context: java
           platforms: linux/amd64,linux/arm64
-          build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
+          build_args: |
+            base_image=eclipse-temurin:${{matrix.version}}-jre
           pull: true
-          push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          
+          push_image: ${{ github.ref_name == 'master' }}
+          tag: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
+          cache_from: type=gha
+          cache_to: type=gha,mode=max
+          team: teamforeldrepenger
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+
   trivy:
     needs: [build-java]
     permissions:
