@@ -41,7 +41,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push GAR
         uses: nais/docker-build-push@v0
         with:
           docker_context: java
