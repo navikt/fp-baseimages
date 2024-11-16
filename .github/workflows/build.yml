@@ -41,7 +41,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Github
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: java
@@ -52,23 +52,6 @@ jobs:
           tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Build and push GAR
-        uses: nais/docker-build-push@v0
-        with:
-          docker_context: java
-          platforms: linux/amd64,linux/arm64
-          build_args: |
-            base_image=eclipse-temurin:${{matrix.version}}-jre
-          pull: true
-          push_image: ${{ github.ref_name == 'master' }}
-          image_suffix: java
-          tag: ${{matrix.version}}
-          cache_from: type=gha
-          cache_to: type=gha,mode=max
-          team: teamforeldrepenger
-          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
   trivy:
     needs: [build-java]
