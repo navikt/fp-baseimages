@@ -1,6 +1,6 @@
 ARG base_image
 FROM navikt/java:common AS java-common
-FROM ${base_image:eclipse-temurin:23-jre}
+FROM ${base_image:-eclipse-temurin:23-jre}
 
 RUN umask o+r
 
