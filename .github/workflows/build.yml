@@ -41,6 +41,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build and push Github
+        uses: docker/build-push-action@v6
+        with:
+          context: java
+          platforms: linux/amd64,linux/arm64
+          build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
+          pull: true
+          push: ${{ github.ref_name == 'master' }}
+          tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
       - name: Build and push GAR
         uses: nais/docker-build-push@v0
         with:
