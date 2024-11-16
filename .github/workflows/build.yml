@@ -62,7 +62,8 @@ jobs:
             base_image=eclipse-temurin:${{matrix.version}}-jre
           pull: true
           push_image: ${{ github.ref_name == 'master' }}
-          tag: java:${{matrix.version}}
+          image_suffix: java
+          tag: ${{matrix.version}}
           cache_from: type=gha
           cache_to: type=gha,mode=max
           team: teamforeldrepenger
