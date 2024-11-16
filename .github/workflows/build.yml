@@ -50,11 +50,13 @@ jobs:
             base_image=eclipse-temurin:${{matrix.version}}-jre
           pull: true
           push_image: ${{ github.ref_name == 'master' }}
+          tag: latest
           cache_from: type=gha
           cache_to: type=gha,mode=max
           team: teamforeldrepenger
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+
   trivy:
     needs: [build-java]
     permissions:
