@@ -1,7 +1,7 @@
 name: Trivy vulnerabilities scanning of dependencies
 on:
   schedule:
-    - cron:  '* * * * 6'
+    - cron:  '20 21 * * 6'
   workflow_dispatch:
   push:
     branches:
