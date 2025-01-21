@@ -85,7 +85,7 @@ jobs:
         with:
           context: distroless
           platforms: linux/${{matrix.arch}}
-          build-args: JAVA_VERSION=${{matrix.version}} ${{matrix.arch == 'arm64' && 'JVM_OPTS=-XX:UseSVE=0' || ''}}
+          build-args: DISTROLESS_JAVA_VERSION=${{matrix.version}} ${{matrix.arch == 'arm64' && 'JVM_OPTS=-XX:UseSVE=0' || ''}}
           pull: true
           push: ${{ github.ref_name == 'master' }}
           tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}

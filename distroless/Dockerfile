@@ -1,5 +1,5 @@
-ARG JAVA_VERSION
-FROM gcr.io/distroless/java${JAVA_VERSION:-21}-debian12:nonroot
+ARG DISTROLESS_JAVA_VERSION
+FROM gcr.io/distroless/java${DISTROLESS_JAVA_VERSION:-21}-debian12:nonroot
 ARG JVM_OPTS
 
 # Healtcheck lokalt/test
