@@ -1,8 +1,11 @@
 ARG base_image
 FROM navikt/java:common AS java-common
 FROM ${base_image:-eclipse-temurin:23-jre}
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+ARG TARGETARCH
 
-RUN echo "I'm building for ${TARGETARCH}"
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM with $TARGETARCH"
 
 RUN umask o+r
 
@@ -13,6 +16,7 @@ COPY --chown=apprunner:root --from=java-common /run-java.sh /run-java.sh
 COPY --chown=apprunner:root --from=java-common /entrypoint.sh /entrypoint.sh
 COPY --chown=apprunner:root --from=java-common /dumb-init /dumb-init
 COPY --chown=apprunner:root init-scripts/ /init-scripts
+COPY --chown=apprunner:root disable-sve-${TARGETARCH}.sh /disable-sve.sh
 
 RUN apt-get update && apt-get install -y locales
 
@@ -28,7 +32,8 @@ ENV APP_JAR=app.jar
 ENV MAIN_CLASS="Main"
 ENV CLASSPATH="/app/WEB-INF/classes:/app/WEB-INF/lib/*"
 
-RUN exec ./disable-sve-${TARGETARCH}.sh
+RUN chmod +x disable-sve.sh
+RUN exec ./disable-sve.sh
 
 WORKDIR /app
 RUN chown -R apprunner /app
