@@ -5,11 +5,10 @@ ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 ARG TARGETARCH
 
-RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM with $TARGETARCH"
-
-RUN umask o+r
-
-RUN groupadd -r --gid 1069 apprunner && useradd -r --uid 1069 -g apprunner apprunner
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM with $TARGETARCH"  \
+    && umask o+r  \
+    && groupadd -r --gid 1069 apprunner  \
+    && useradd -r --uid 1069 -g apprunner apprunner
 
 COPY --chown=apprunner:root --from=java-common /init-scripts /init-scripts
 COPY --chown=apprunner:root --from=java-common /run-java.sh /run-java.sh
@@ -18,7 +17,8 @@ COPY --chown=apprunner:root --from=java-common /dumb-init /dumb-init
 COPY --chown=apprunner:root init-scripts/ /init-scripts
 COPY --chown=apprunner:root konfig/konfig-for-${TARGETARCH}.sh /konfig.sh
 
-RUN apt-get update && apt-get install -y locales
+RUN apt-get update  \
+    && apt-get install -y locales
 
 RUN sed -i -e 's/# nb_NO.UTF-8 UTF-8/nb_NO.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
 ENV LC_ALL="nb_NO.UTF-8"
@@ -32,8 +32,8 @@ ENV APP_JAR=app.jar
 ENV MAIN_CLASS="Main"
 ENV CLASSPATH="/app/WEB-INF/classes:/app/WEB-INF/lib/*"
 
-RUN chmod +x konfig.sh
-RUN exec ./konfig.sh
+RUN chmod +x konfig.sh  \
+    && exec konfig.sh
 
 WORKDIR /app
 RUN chown -R apprunner /app
