@@ -127,7 +127,7 @@ jobs:
           
       - name: Push Docker manifest with verbose logging
         run: |
-          docker manifest push --purge ghcr.io/navikt/fp-baseimages/distroless:21 --verbose
+          docker manifest push --purge ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
 
   trivy:
     needs: [build-java]
