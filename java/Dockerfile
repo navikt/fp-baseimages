@@ -1,6 +1,11 @@
 ARG base_image
 FROM navikt/java:common AS java-common
 FROM ${base_image:-eclipse-temurin:23-jre}
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+ARG TARGETARCH
+
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM with $TARGETARCH"
 
 RUN umask o+r
 
@@ -11,6 +16,7 @@ COPY --chown=apprunner:root --from=java-common /run-java.sh /run-java.sh
 COPY --chown=apprunner:root --from=java-common /entrypoint.sh /entrypoint.sh
 COPY --chown=apprunner:root --from=java-common /dumb-init /dumb-init
 COPY --chown=apprunner:root init-scripts/ /init-scripts
+COPY --chown=apprunner:root konfig/konfig-for-${TARGETARCH}.sh /konfig.sh
 
 RUN apt-get update && apt-get install -y locales
 
@@ -25,6 +31,9 @@ ENV APP_BINARY=app
 ENV APP_JAR=app.jar
 ENV MAIN_CLASS="Main"
 ENV CLASSPATH="/app/WEB-INF/classes:/app/WEB-INF/lib/*"
+
+RUN chmod +x konfig.sh
+RUN exec ./konfig.sh
 
 WORKDIR /app
 RUN chown -R apprunner /app
