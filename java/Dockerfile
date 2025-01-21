@@ -1,5 +1,4 @@
 ARG base_image
-ARG TARGETARCH
 FROM navikt/java:common AS java-common
 FROM ${base_image:-eclipse-temurin:23-jre}
 
