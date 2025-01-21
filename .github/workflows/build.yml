@@ -118,12 +118,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create SHA manifest and push
+        if: github.ref_name == 'master'
         run: |
           docker manifest create \
-            ghcr.io/${{ github.repository }}/distroless:${{matrix.version}} \
-            --amend ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-amd64 \
-            --amend ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-arm64
-          docker manifest push ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
+            "ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}" \
+            "ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-amd64" \
+            "ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-arm64"
+          
+          docker manifest push "ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}"
 
   trivy:
     needs: [build-java]
