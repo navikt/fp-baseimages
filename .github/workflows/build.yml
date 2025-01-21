@@ -90,9 +90,42 @@ jobs:
             ${{matrix.arch == 'arm64' && '"JVM_OPTS=-XX:UseSVE=0"' || ''}}
           pull: true
           push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
+          tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-${{matrix.arch}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  create-distroless-manifests:
+    needs: [ build-distroless-java ]
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      matrix:
+        version: [ '17', '21' ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create SHA manifest and push
+        if: github.ref_name == 'master'
+        run: |
+          docker manifest create \
+            "ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}" \
+            "ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-amd64" \
+            "ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-arm64"
+          
+          docker manifest push "ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}"
 
   trivy:
     needs: [build-java]
