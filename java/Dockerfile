@@ -16,7 +16,7 @@ COPY --chown=apprunner:root --from=java-common /run-java.sh /run-java.sh
 COPY --chown=apprunner:root --from=java-common /entrypoint.sh /entrypoint.sh
 COPY --chown=apprunner:root --from=java-common /dumb-init /dumb-init
 COPY --chown=apprunner:root init-scripts/ /init-scripts
-COPY --chown=apprunner:root disable-sve-${TARGETARCH}.sh /disable-sve.sh
+COPY --chown=apprunner:root konfig/konfig-for-${TARGETARCH}.sh /konfig.sh
 
 RUN apt-get update && apt-get install -y locales
 
@@ -32,8 +32,8 @@ ENV APP_JAR=app.jar
 ENV MAIN_CLASS="Main"
 ENV CLASSPATH="/app/WEB-INF/classes:/app/WEB-INF/lib/*"
 
-RUN chmod +x disable-sve.sh
-RUN exec ./disable-sve.sh
+RUN chmod +x konfig.sh
+RUN exec ./konfig.sh
 
 WORKDIR /app
 RUN chown -R apprunner /app
