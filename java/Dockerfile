@@ -20,7 +20,7 @@ ENV LANG="nb_NO.UTF-8"
 ENV TZ="Europe/Oslo"
 
 # Please see https://blogs.oracle.com/java-platform-group/java-se-support-for-docker-cpu-and-memory-limits
-ENV DEFAULT_JVM_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+PrintCommandLineFlags -XX:ActiveProcessorCount=2 -XX:MaxRAMPercentage=75 -Duser.timezone=Europe/Oslo"
+ENV DEFAULT_JVM_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+PrintCommandLineFlags -XX:ActiveProcessorCount=2 -XX:MaxRAMPercentage=75 -XX:UseSVE=0 -Duser.timezone=Europe/Oslo"
 ENV APP_BINARY=app
 ENV APP_JAR=app.jar
 ENV MAIN_CLASS="Main"
