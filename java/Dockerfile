@@ -33,7 +33,7 @@ ENV MAIN_CLASS="Main"
 ENV CLASSPATH="/app/WEB-INF/classes:/app/WEB-INF/lib/*"
 
 RUN chmod +x konfig.sh  \
-    && exec konfig.sh
+    && exec ./konfig.sh
 
 WORKDIR /app
 RUN chown -R apprunner /app
