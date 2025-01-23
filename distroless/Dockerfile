@@ -1,6 +1,5 @@
 ARG DISTROLESS_JAVA_VERSION
 FROM gcr.io/distroless/java${DISTROLESS_JAVA_VERSION:-21}-debian12:nonroot
-ARG JVM_OPTS
 
 # Healtcheck lokalt/test
 COPY --from=busybox:stable-musl /bin/wget /usr/bin/wget
@@ -15,7 +14,6 @@ ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
     -XX:MaxRAMPercentage=75 \
     -Duser.timezone=Europe/Oslo \
     -Djava.security.egd=file:/dev/urandom \
-    -Dlogback.configurationFile=conf/logback.xml \
-    ${JVM_OPTS:-}"
+    -Dlogback.configurationFile=conf/logback.xml"
 
 CMD ["app.jar"]

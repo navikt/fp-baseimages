@@ -1,8 +1,6 @@
 # Foreldrepenger baseimage
 Base docker images for Foreldrepenger.
 
-Bruker en del konsepter fra https://github.com/navikt/baseimages , men bygger ikke på de produserte images derfra.
-
 Tilgjengelige images:
 * Adoptium Temurin 17, 21, 23 https://adoptium.net/ ([`java`](java))
 
@@ -21,20 +19,10 @@ COPY <path-to-jar> app.jar
 ### Miljø variabler
 Imagene legger på følgende miljø variablene om de er montert på riktig sti.
 
-* Hvis `$NAV_TRUSTSTORE_PATH` er satt og keystore ikke er korrupt.
-```shell script
-JAVA_OPTS="${JAVA_OPTS} -Djavax.net.ssl.trustStore=${NAV_TRUSTSTORE_PATH}"
-JAVA_OPTS="${JAVA_OPTS} -Djavax.net.ssl.trustStorePassword=${NAV_TRUSTSTORE_PASSWORD}"
-export JAVA_OPTS
-```
-
 * Hvis `webproxy: true` i `naiserator.yml`
 ```shell script
 export JAVA_OPTS="${JAVA_OPTS} ${JAVA_PROXY_OPTIONS}"
 ```
-
-* Alle variabler definert som app properties i vault montert under `/var/run/secrets/nais.io/vault/*.env`
-
 * Importerer føldende database brukere:
 ```shell script
 DEFAULTDS_URL hvis montert under `/var/run/secrets/nais.io/defaultDSconfig/jdbc_url`

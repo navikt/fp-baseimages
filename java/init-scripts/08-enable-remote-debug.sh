@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Enables remote debugging on port 5005 if the application is running in a development cluster
 

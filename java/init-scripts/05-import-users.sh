@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if test -f /var/run/secrets/nais.io/defaultDSconfig/jdbc_url;
 then
