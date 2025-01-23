@@ -14,7 +14,8 @@ RUN umask o+r \
 
 ENV LANG='nb_NO.UTF-8' LANGUAGE='nb_NO:nb' LC_ALL='nb_NO.UTF-8' TZ="Europe/Oslo"
 
-COPY --chown=apprunner:root entrypoint.sh /entrypoint.sh init-scripts/ /init-scripts/
+COPY --chown=apprunner:root entrypoint.sh /entrypoint.sh
+COPY --chown=apprunner:root init-scripts/ /init-scripts
 
 ENV DEFAULT_JVM_OPTS="-XX:+PrintCommandLineFlags \
                       -XX:ActiveProcessorCount=2 \
