@@ -12,12 +12,9 @@ RUN umask o+r \
     && sed -i -e 's/# nb_NO.UTF-8 UTF-8/nb_NO.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen
 
-ENV LC_ALL="nb_NO.UTF-8"
-ENV LANG="nb_NO.UTF-8"
-ENV TZ="Europe/Oslo"
+ENV LANG='nb_NO.UTF-8' LANGUAGE='nb_NO:nb' LC_ALL='nb_NO.UTF-8' TZ="Europe/Oslo"
 
 COPY --chown=apprunner:root entrypoint.sh /entrypoint.sh
-COPY --chown=apprunner:root run-java.sh /run-java.sh
 COPY --chown=apprunner:root init-scripts/ /init-scripts
 
 # Please see https://blogs.oracle.com/java-platform-group/java-se-support-for-docker-cpu-and-memory-limits

@@ -11,4 +11,5 @@ else
     echo "/init-scripts does not exist, skipping startup scripts"
 fi
 
-exec /run-java.sh $@
+set -x
+exec java ${DEFAULT_JVM_OPTS} ${JAVA_OPTS} -jar ${APP_JAR} ${RUNTIME_OPTS} $@
