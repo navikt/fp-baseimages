@@ -12,4 +12,4 @@ else
 fi
 
 set -x
-exec java ${DEFAULT_JVM_OPTS} ${JAVA_OPTS} -jar ${APP_JAR} ${RUNTIME_OPTS} $@
+exec java ${DEFAULT_JVM_OPTS} ${JAVA_OPTS} -server  -classpath ${CLASSPATH} -jar app.jar ${RUNTIME_OPTS} $@

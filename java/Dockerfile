@@ -14,15 +14,16 @@ RUN umask o+r \
 
 ENV LANG='nb_NO.UTF-8' LANGUAGE='nb_NO:nb' LC_ALL='nb_NO.UTF-8' TZ="Europe/Oslo"
 
-COPY --chown=apprunner:root entrypoint.sh /entrypoint.sh
-COPY --chown=apprunner:root init-scripts/ /init-scripts
+COPY --chown=apprunner:root entrypoint.sh /entrypoint.sh init-scripts/ /init-scripts/
 
-# Please see https://blogs.oracle.com/java-platform-group/java-se-support-for-docker-cpu-and-memory-limits
-ENV DEFAULT_JVM_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+PrintCommandLineFlags -XX:ActiveProcessorCount=2 -XX:MaxRAMPercentage=75 -Duser.timezone=Europe/Oslo"
-ENV APP_BINARY=app
-ENV APP_JAR=app.jar
-ENV MAIN_CLASS="Main"
-ENV CLASSPATH="/app/WEB-INF/classes:/app/WEB-INF/lib/*"
+ENV DEFAULT_JVM_OPTS="-XX:+PrintCommandLineFlags \
+                      -XX:ActiveProcessorCount=2 \
+                      -XX:MaxRAMPercentage=75 \
+                      -Djava.security.egd=file:/dev/urandom \
+                      -Duser.timezone=Europe/Oslo \
+                      -Dlogback.configurationFile=conf/logback.xml"
+
+ENV CLASSPATH="/app/classes:/app/lib/*"
 
 WORKDIR /app
 
