@@ -24,11 +24,7 @@ ENV DEFAULT_JVM_OPTS="-XX:+PrintCommandLineFlags \
                       -Duser.timezone=Europe/Oslo \
                       -Dlogback.configurationFile=conf/logback.xml"
 
-ENV CLASSPATH="/app/classes:/app/lib/*"
-
 WORKDIR /app
-
 USER apprunner
-
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
