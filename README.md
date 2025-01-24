@@ -12,7 +12,7 @@ docker build -t java23 --build-arg base_image=eclipse-temurin:23-jre ./java
 
 ### Java
 ```dockerfile
-FROM ghcr.io/navikt/fp-baseimages/java:<17|21|23>
+FROM ghcr.io/navikt/fp-baseimages/java:<17|21|23>-nonroot
 COPY <path-to-jar> app.jar
 ```
 

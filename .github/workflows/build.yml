@@ -84,7 +84,7 @@ jobs:
         with:
           context: distroless
           platforms: linux/amd64,linux/arm64
-          build-args: DISTROLESS_JAVA_VERSION=${{matrix.version}}
+          build-args: BASE_IMAGE=gcr.io/distroless/java${{matrix.version}}-debian12:nonroot
           pull: true
           push: ${{ github.ref_name == 'refactor' }}
           tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-test

@@ -1,11 +1,9 @@
 ARG BASE_IMAGE
-FROM ${BASE_IMAGE:-eclipse-temurin:23-jre}
+FROM ${BASE_IMAGE:-"eclipse-temurin:23-jre"}
 
 RUN umask o+r \
     && groupadd -r --gid 1069 apprunner \
     && useradd -r --uid 1069 -g apprunner apprunner \
-    && mkdir -p /app/lib \
-    && mkdir -p /app/conf \
     && chown -R apprunner /app \
     && apt-get update  \
     && apt-get install -y locales \
