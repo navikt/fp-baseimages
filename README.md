@@ -3,6 +3,7 @@ Base docker images for Foreldrepenger.
 
 Tilgjengelige images:
 * Adoptium Temurin 17, 21, 23 https://adoptium.net/ ([`java`](java))
+* Distroless 17, 21 ([`distroless`](distroless))
 
 ## Bygg lokalt
 ```shell script
@@ -64,3 +65,13 @@ kubectl port-forward pod/<pod-name> 5005:5005
 
 Hvis ikke allerede gjort, opprett en ny configuration i IntelliJ av type "Remote".
 Start debuggingen slik som man vanligvis ville gjort lokalt.
+
+## Known issues
+
+If you run your java containers on a M4 Apple Silicon Mac on MacOS 15.2, you might run into the SIGKILL error.
+
+To workarround this, you can add the following environment variable to your Dockerfile:
+
+```Dockerfile
+ENV JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS} -XX:UseSVE=0"
+```
