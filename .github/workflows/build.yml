@@ -46,14 +46,14 @@ jobs:
         with:
           context: java
           platforms: linux/amd64,linux/arm64
-          build-args: base_image=eclipse-temurin:${{matrix.version}}-jre
+          build-args: BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre
           pull: true
           push: ${{ github.ref_name == 'master' }}
           tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  build-distroless-java:
+  build-distroless:
     permissions:
       contents: read
       packages: write
@@ -61,7 +61,6 @@ jobs:
     strategy:
       matrix:
         version: [ '17', '21' ]
-        arch: [ 'amd64', 'arm64' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -84,52 +83,15 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: distroless
-          platforms: linux/${{matrix.arch}}
-          provenance: false
-          build-args: |
-            "DISTROLESS_JAVA_VERSION=${{matrix.version}}"
-            ${{matrix.arch == 'arm64' && '"JVM_OPTS=-XX:UseSVE=0"' || ''}}
+          platforms: linux/amd64,linux/arm64
+          build-args: BASE_IMAGE=gcr.io/distroless/java${{matrix.version}}-debian12:nonroot
           pull: true
           push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-${{matrix.arch}}
+          tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  create-distroless-manifests:
-    needs: [ build-distroless-java ]
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      matrix:
-        version: [ '17', '21' ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create SHA manifest and push
-        if: github.ref_name == 'master'
-        run: |
-          docker manifest create ghcr.io/${{ github.repository }}/distroless:${{matrix.version}} \
-            --amend ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-amd64 \
-            --amend ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}-arm64
-          
-      - name: Push Docker manifest with verbose logging
-        run: |
-          docker manifest push --purge ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
-
-  trivy:
+  trivy-java:
     needs: [build-java]
     permissions:
       actions: read
@@ -138,5 +100,17 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'java:23'
+      build-version: 'java:21'
+    secrets: inherit
+
+  trivy-distroless:
+    needs: [build-distroless]
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    name: Trivy
+    uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
+    with:
+      build-version: 'distroless:21'
     secrets: inherit

@@ -1,10 +1,9 @@
 # Foreldrepenger baseimage
 Base docker images for Foreldrepenger.
 
-Bruker en del konsepter fra https://github.com/navikt/baseimages , men bygger ikke på de produserte images derfra.
-
 Tilgjengelige images:
 * Adoptium Temurin 17, 21, 23 https://adoptium.net/ ([`java`](java))
+* Distroless 17, 21 ([`distroless`](distroless))
 
 ## Bygg lokalt
 ```shell script
@@ -14,14 +13,14 @@ docker build -t java23 --build-arg base_image=eclipse-temurin:23-jre ./java
 
 ### Java
 ```dockerfile
-FROM ghcr.io/navikt/fp-baseimages/java:<17|21|23>
+FROM ghcr.io/navikt/fp-baseimages/java:<17|21|23>-nonroot
 COPY <path-to-jar> app.jar
 ```
 
 ### Miljø variabler
 Imagene legger på følgende miljø variablene om de er montert på riktig sti.
 
-* Hvis `$NAV_TRUSTSTORE_PATH` er satt og keystore ikke er korrupt.
+* Hvis `$NAV_TRUSTSTORE_PATH` er satt og keystore finnes.
 ```shell script
 JAVA_OPTS="${JAVA_OPTS} -Djavax.net.ssl.trustStore=${NAV_TRUSTSTORE_PATH}"
 JAVA_OPTS="${JAVA_OPTS} -Djavax.net.ssl.trustStorePassword=${NAV_TRUSTSTORE_PASSWORD}"
@@ -32,9 +31,6 @@ export JAVA_OPTS
 ```shell script
 export JAVA_OPTS="${JAVA_OPTS} ${JAVA_PROXY_OPTIONS}"
 ```
-
-* Alle variabler definert som app properties i vault montert under `/var/run/secrets/nais.io/vault/*.env`
-
 * Importerer føldende database brukere:
 ```shell script
 DEFAULTDS_URL hvis montert under `/var/run/secrets/nais.io/defaultDSconfig/jdbc_url`
@@ -69,3 +65,13 @@ kubectl port-forward pod/<pod-name> 5005:5005
 
 Hvis ikke allerede gjort, opprett en ny configuration i IntelliJ av type "Remote".
 Start debuggingen slik som man vanligvis ville gjort lokalt.
+
+## Known issues
+
+If you run your java containers on a M4 Apple Silicon Mac on MacOS 15.2, you might run into the SIGKILL error.
+
+To workarround this, you can add the following environment variable to your Dockerfile:
+
+```Dockerfile
+ENV JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS} -XX:UseSVE=0"
+```
