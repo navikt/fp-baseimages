@@ -11,7 +11,7 @@ on:
       - 'LICENCE'
       - 'CODEOWNERS'
   schedule:
-    - cron: '23 23 * * 2'
+    - cron: '23 23 * * *'
   workflow_dispatch:
 
 jobs:
