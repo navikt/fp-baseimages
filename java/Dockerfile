@@ -2,7 +2,7 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE:-"eclipse-temurin:23-jre-alpine"}
 
 RUN umask o+r \
-    && addgroup --system --gid 1069  apprunner \
+    && addgroup --system --gid 1069 apprunner \
     && adduser --system --uid 1069 -G apprunner apprunner \
     && mkdir -p /app \
     && chown -R apprunner:apprunner /app \
