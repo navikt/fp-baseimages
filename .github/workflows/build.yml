@@ -48,7 +48,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
           pull: true
-          push: true
+          push: ${{ github.ref_name == 'master' }}
           tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}-alpine
           cache-from: type=gha
           cache-to: type=gha,mode=max
