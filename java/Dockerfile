@@ -1,16 +1,16 @@
 ARG BASE_IMAGE
-FROM ${BASE_IMAGE:-"eclipse-temurin:23-jre"}
+FROM ${BASE_IMAGE:-"eclipse-temurin:23-jre-alpine"}
 
 RUN umask o+r \
-    && groupadd -r --gid 1069 apprunner \
-    && useradd -r --uid 1069 -g apprunner apprunner \
+    && addgroup --system --gid 1069 apprunner \
+    && adduser --system --uid 1069 -G apprunner apprunner \
     && mkdir -p /app \
-    && chown -R apprunner /app \
-    && apt-get update  \
-    && apt-get install -y locales \
-    && apt-get clean \
-    && sed -i -e 's/# nb_NO.UTF-8 UTF-8/nb_NO.UTF-8 UTF-8/' /etc/locale.gen \
-    && locale-gen
+    && chown -R apprunner:apprunner /app \
+    && apk update \
+    && apk add --no-cache musl-locales \
+    && sed -i '/nb_NO.UTF-8/s/^# //' /etc/apk/world \
+    && echo "export LANG=nb_NO.UTF-8" >> /etc/profile \
+    && echo "export LC_ALL=nb_NO.UTF-8" >> /etc/profile
 
 ENV LANG='nb_NO.UTF-8' LANGUAGE='nb_NO:nb' LC_ALL='nb_NO.UTF-8' TZ="Europe/Oslo"
 
