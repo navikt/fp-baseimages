@@ -13,7 +13,6 @@ ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
                       -XX:ActiveProcessorCount=2 \
                       -XX:MaxRAMPercentage=75 \
                       -Duser.timezone=Europe/Oslo \
-                      -Djava.security.egd=file:/dev/urandom \
-                      -Dlogback.configurationFile=conf/logback.xml"
+                      -Djava.security.egd=file:/dev/urandom"
 
 CMD ["app.jar"]
