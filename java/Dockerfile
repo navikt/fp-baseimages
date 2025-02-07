@@ -7,6 +7,7 @@ RUN umask o+r \
     && mkdir -p /app \
     && chown -R apprunner:apprunner /app \
     && apk update \
+    && apk upgrade \
     && apk add --no-cache musl-locales \
     && sed -i '/nb_NO.UTF-8/s/^# //' /etc/apk/world \
     && echo "export LANG=nb_NO.UTF-8" >> /etc/profile \
