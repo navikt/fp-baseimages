@@ -1,5 +1,5 @@
 ARG BASE_IMAGE
-FROM ${BASE_IMAGE:-"eclipse-temurin:23-jre-alpine"}
+FROM ${BASE_IMAGE:-"eclipse-temurin:24-jre-alpine"}
 
 RUN umask o+r \
     && addgroup --system --gid 1069 apprunner \
