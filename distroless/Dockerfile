@@ -1,5 +1,5 @@
 ARG BASE_IMAGE
-FROM ${BASE_IMAGE:-"gcr.io/distroless/java21-debian12:nonroot"}
+FROM ${BASE_IMAGE:-"europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-21"}
 
 # Healtcheck lokalt/test
 COPY --from=busybox:stable-musl /bin/wget /usr/bin/wget
@@ -15,4 +15,5 @@ ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
                       -Duser.timezone=Europe/Oslo \
                       -Djava.security.egd=file:/dev/urandom"
 
+ENTRYPOINT ["java", "-jar", "app.jar"]
 CMD ["app.jar"]
