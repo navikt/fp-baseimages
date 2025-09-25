@@ -1,11 +1,11 @@
-Foreldrepenger Distroless baseimage
+Foreldrepenger Chainguard Java Distroless baseimage
 =====================
 
 Basic Usage
 ---------------------
 
 ```Dockerfile
-FROM ghcr.io/navikt/fp-baseimages/distroless:21
+FROM ghcr.io/navikt/fp-baseimages/distroless:25
 
 LABEL org.opencontainers.image.source=https://github.com/navikt/ft-inntektsmelding
 
@@ -24,7 +24,6 @@ ENV JDK_JAVA_OPTIONS="${JDK_JAVA_OPTIONS} -Dlogback.configurationFile=conf/logba
 
 Or by specifying the `JAVA_TOOL_OPTIONS` environment variable in the Dockerfile.
 
-
 ### Standard setup
 
 The working director is sett to `/app`.
@@ -34,7 +33,7 @@ WORKDIR /app
 
 The image sets a set of standard environment variables:
 ```Dockerfile
-ENV LANG='nb_NO.UTF-8' LANGUAGE='nb_NO:nb' LC_ALL='nb:NO.UTF-8' TZ="Europe/Oslo"
+ENV TZ="Europe/Oslo"
 
 ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
                       -XX:ActiveProcessorCount=2 \
