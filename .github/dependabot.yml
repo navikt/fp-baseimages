@@ -4,6 +4,10 @@ updates:
     directory: "/java/"
     schedule:
       interval: daily
+  - package-ecosystem: docker
+    directory: "/distroless/"
+    schedule:
+      interval: daily
   - package-ecosystem: github-actions
     directory: "/"
     schedule:

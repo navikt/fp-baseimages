@@ -1,4 +1,4 @@
-Foreldrepenger Java baseimage
+Foreldrepenger Chainguard Java baseimage
 =====================
 
 Basic Usage
