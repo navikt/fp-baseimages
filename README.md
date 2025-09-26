@@ -1,22 +1,19 @@
-# Foreldrepenger Baseimages
-Prosjektet bygger JRE docker images brukt av Team Foreldrepenger.
-
-Vi bygger på litt ekstra funksjonalitet på toppen av Chainguard sine images for å gjøre det enklere å kjøre Java applikasjoner lokalt 
-og på Nav sin Nais platform, og for å gjøre det likt for alle applikasjoner.
+# Foreldrepenger baseimage
+Base docker images for Foreldrepenger.
 
 Tilgjengelige images:
-* Chainguard OpenJdk 21, 25 Dev https://images.chainguard.dev/directory/image/jre/versions ([`java`](java))
-* Chainguard OpenJdk 21, 25 https://images.chainguard.dev/directory/image/jre/versions ([`distroless`](distroless))
+* Adoptium Temurin 21, 24 https://adoptium.net/ ([`java`](java))
+* Distroless 21 ([`distroless`](distroless))
 
 ## Bygg lokalt
 ```shell script
-docker build -t java25 --build-arg base_image=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-25-dev ./java
+docker build -t java24 --build-arg base_image=eclipse-temurin:24-jre ./java
 ```
 ## Hvordan ta i bruk base image
 
 ### Java
 ```dockerfile
-FROM ghcr.io/navikt/fp-baseimages/java:<21|25>
+FROM ghcr.io/navikt/fp-baseimages/java:<21|24>-nonroot
 COPY <path-to-jar> app.jar
 ```
 

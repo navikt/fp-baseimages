@@ -22,7 +22,7 @@ jobs:
       id-token: write
     strategy:
       matrix:
-        version: [ '21', '25' ]
+        version: [ '21', '24' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -41,19 +41,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # For å hente chainguard image fra GAR
-      - name: NAIS login
-        uses: nais/login@e7cf2c159677dc7c7d599feff5f808f2bf59c7cf # ratchet:nais/login@v0
-        id: login
-        with:
-          team: teamforeldrepenger
-
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: java
           platforms: linux/amd64,linux/arm64
-          build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-${{matrix.version}}-dev
+          build-args: BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
           pull: true
           push: ${{ github.ref_name == 'master' }}
           tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
@@ -67,7 +60,7 @@ jobs:
       id-token: write
     strategy:
       matrix:
-        version: [ '21', '25']
+        version: [ '21', '24']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -115,7 +108,7 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'java:25'
+      build-version: 'java:21'
     secrets: inherit
 
   trivy-distroless:
@@ -127,5 +120,5 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'distroless:25'
+      build-version: 'distroless:21'
     secrets: inherit

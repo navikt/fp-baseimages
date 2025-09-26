@@ -7,7 +7,7 @@ COPY --from=busybox:stable-musl /bin/wget /usr/bin/wget
 # Working dir for RUN, CMD, ENTRYPOINT, COPY and ADD (required because of nonroot user cannot run commands in root)
 WORKDIR /app
 
-ENV TZ="Europe/Oslo"
+ENV LANG='nb_NO.UTF-8' LANGUAGE='nb_NO:nb' LC_ALL='nb:NO.UTF-8' TZ="Europe/Oslo"
 
 ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
                       -XX:ActiveProcessorCount=2 \

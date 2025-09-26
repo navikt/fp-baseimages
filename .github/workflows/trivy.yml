@@ -18,5 +18,5 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'java:25'
+      build-version: 'java:24'
     secrets: inherit
