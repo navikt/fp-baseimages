@@ -46,7 +46,7 @@ jobs:
         with:
           context: java
           platforms: linux/amd64,linux/arm64
-          build-args: BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
+          build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-${{matrix.version}}
           pull: true
           push: ${{ github.ref_name == 'master' }}
           tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
@@ -108,7 +108,7 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'java:21'
+      build-version: 'java:25'
     secrets: inherit
 
   trivy-distroless:
@@ -120,5 +120,5 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'distroless:21'
+      build-version: 'distroless:25'
     secrets: inherit
