@@ -3,7 +3,7 @@ Base docker images for Foreldrepenger.
 
 Tilgjengelige images:
 * Adoptium Temurin 21, 25 https://adoptium.net/ ([`java`](java))
-* Distroless 21 ([`distroless`](distroless))
+* Chainguard Distroless 21, 25 ([`distroless`](distroless))
 
 ## Bygg lokalt
 ```shell script

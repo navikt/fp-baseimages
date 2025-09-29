@@ -41,6 +41,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # For å hente chainguard image fra GAR
+      #- name: NAIS login
+      #  uses: nais/login@e7cf2c159677dc7c7d599feff5f808f2bf59c7cf # ratchet:nais/login@v0
+      #  id: login
+      #  with:
+      #    team: teamforeldrepenger
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -108,7 +115,7 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'java:21'
+      build-version: 'java:25'
     secrets: inherit
 
   trivy-distroless:
@@ -120,5 +127,5 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'distroless:21'
+      build-version: 'distroless:25'
     secrets: inherit
