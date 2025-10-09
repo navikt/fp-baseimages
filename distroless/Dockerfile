@@ -15,5 +15,4 @@ ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
                       -Duser.timezone=Europe/Oslo \
                       -Djava.security.egd=file:/dev/urandom"
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
-CMD ["app.jar"]
+CMD ["-jar", "app.jar"]
