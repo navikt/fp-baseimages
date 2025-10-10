@@ -102,7 +102,7 @@ jobs:
           build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-${{matrix.version}}
           pull: true
           push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
+          tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}, ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
