@@ -15,7 +15,6 @@ ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
                       -Duser.timezone=Europe/Oslo \
                       -Duser.language=nb \
                       -Duser.country=NO \
-                      -Dfile.encoding=UTF-8 \
                       -Djava.security.egd=file:/dev/urandom \
                       -Dlogback.configurationFile=conf/logback.xml"
 
