@@ -1,5 +1,6 @@
-Foreldrepenger Distroless baseimage
+Foreldrepenger Distroless baseimage (deprecated)
 =====================
+> WARMING: Deprecated image use `ghcr.io/navikt/fp-baseimages/chainguard:jre-25` instead.
 
 Basic Usage
 ---------------------
@@ -40,6 +41,8 @@ ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
                       -XX:ActiveProcessorCount=2 \
                       -XX:MaxRAMPercentage=75 \
                       -Duser.timezone=Europe/Oslo \
+                      -Duser.language=nb \
+                      -Duser.country=NO \
                       -Djava.security.egd=file:/dev/urandom \
                       -Dlogback.configurationFile=conf/logback.xml"
 ```

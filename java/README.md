@@ -1,5 +1,6 @@
-Foreldrepenger Java baseimage
+Foreldrepenger Java baseimage (deprecated)
 =====================
+> WARMING: Deprecated image use `ghcr.io/navikt/fp-baseimages/chainguard:jre-25` instead om det er mulig.
 
 Basic Usage
 ---------------------
