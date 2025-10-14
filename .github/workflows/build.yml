@@ -97,11 +97,14 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context:  chainguard/jre
+          context: chainguard/jre
           platforms: linux/amd64,linux/arm64
           build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-${{matrix.version}}
           pull: true
           push: ${{ github.ref_name == 'master' }}
+          # DEPRECATION NOTICE: The 'distroless' tag is being replaced by 'chainguard'.
+          # The 'distroless' tag will be removed in a future release (planned removal: after distroless is no longer in use).
+          # Please migrate to the 'chainguard' tag as soon as possible.
           tags: ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}},ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
