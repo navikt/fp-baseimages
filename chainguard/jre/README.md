@@ -1,18 +1,17 @@
-Foreldrepenger Distroless baseimage (deprecated)
+Foreldrepenger Chainguard JRE baseimage
 =====================
-> WARMING: Deprecated image use `ghcr.io/navikt/fp-baseimages/chainguard:jre-25` instead.
 
 Basic Usage
 ---------------------
 
 ```Dockerfile
-FROM ghcr.io/navikt/fp-baseimages/distroless:25
+FROM ghcr.io/navikt/fp-baseimages/chainguard:jre-25
 
 LABEL org.opencontainers.image.source=https://github.com/navikt/ft-inntektsmelding
 
 COPY target/classes/logback*.xml conf/
 COPY target/lib/*.jar lib/
-COPY target/app.jar .
+COPY target/app.jar ./
 ```
 
 ## Customisation
@@ -35,7 +34,7 @@ WORKDIR /app
 
 The image sets a set of standard environment variables:
 ```Dockerfile
-ENV LANG='nb_NO.UTF-8' LANGUAGE='nb_NO:nb' LC_ALL='nb:NO.UTF-8' TZ="Europe/Oslo"
+ENV TZ="Europe/Oslo"
 
 ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
                       -XX:ActiveProcessorCount=2 \
@@ -48,6 +47,6 @@ ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
 ```
 and executes
 ```Dockerfile
-CMD ["app.jar"]
+CMD ["-jar", "app.jar"]
 ```
 to start the application.
