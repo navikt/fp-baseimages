@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-java:
+  build-temurin-java:
     permissions:
       contents: read
       packages: write
@@ -60,7 +60,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  build-distroless:
+  build-chainguard-jre:
     permissions:
       contents: read
       packages: write
@@ -97,17 +97,17 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: distroless
+          context:  chainguard/jre
           platforms: linux/amd64,linux/arm64
           build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-${{matrix.version}}
           pull: true
           push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}, ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}}
+          tags: ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}},ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  trivy-java:
-    needs: [build-java]
+  trivy-temurin-java:
+    needs: [build-temurin-java]
     permissions:
       actions: read
       contents: read
@@ -118,8 +118,8 @@ jobs:
       build-version: 'java:25'
     secrets: inherit
 
-  trivy-distroless:
-    needs: [build-distroless]
+  trivy-chainguard-jre:
+    needs: [build-chainguard-jre]
     permissions:
       actions: read
       contents: read
@@ -127,5 +127,5 @@ jobs:
     name: Trivy
     uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      build-version: 'distroless:25'
+      build-version: 'chainguard:jre-25'
     secrets: inherit

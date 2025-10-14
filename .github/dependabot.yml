@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: docker
-    directory: "/distroless/"
+    directory: "/chainguard/jre/"
     schedule:
       interval: daily
   - package-ecosystem: github-actions
