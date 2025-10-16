@@ -9,6 +9,4 @@ then
     echo "00. - Truststore injected."
 else
     echo "00. - No truststore found: '${NAV_TRUSTSTORE_PATH}'."
-    exit 1
 fi
-
