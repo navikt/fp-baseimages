@@ -1,10 +1,6 @@
 version: 2
 updates:
   - package-ecosystem: docker
-    directory: "/java/"
-    schedule:
-      interval: daily
-  - package-ecosystem: docker
     directory: "/chainguard/jre/"
     schedule:
       interval: daily

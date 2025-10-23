@@ -15,51 +15,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-temurin-java:
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      matrix:
-        version: [ '21', '25' ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout latest code
-        uses: actions/checkout@v5
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      # For å hente chainguard image fra GAR
-      #- name: NAIS login
-      #  uses: nais/login@e7cf2c159677dc7c7d599feff5f808f2bf59c7cf # ratchet:nais/login@v0
-      #  id: login
-      #  with:
-      #    team: teamforeldrepenger
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: java
-          platforms: linux/amd64,linux/arm64
-          build-args: BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
-          pull: true
-          push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
   build-chainguard-jre:
     permissions:
       contents: read
@@ -102,24 +57,9 @@ jobs:
           build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-${{matrix.version}}
           pull: true
           push: ${{ github.ref_name == 'master' }}
-          # DEPRECATION NOTICE: The 'distroless' tag is being replaced by 'chainguard'.
-          # The 'distroless' tag will be removed in a future release (planned removal: after distroless is no longer in use).
-          # Please migrate to the 'chainguard' tag as soon as possible.
-          tags: ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}},ghcr.io/${{ github.repository }}/distroless:${{matrix.version}}
+          tags: ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-  trivy-temurin-java:
-    needs: [build-temurin-java]
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    name: Trivy
-    uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
-    with:
-      build-version: 'java:25'
-    secrets: inherit
 
   trivy-chainguard-jre:
     needs: [build-chainguard-jre]

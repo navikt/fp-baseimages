@@ -16,7 +16,7 @@ jobs:
         with:
           package-name: fp-baseimages/java
           package-type: container
-          min-versions-to-keep: 10
+          min-versions-to-keep: 1
           delete-only-untagged-versions: true
 
       - name: Delete old chainguard JRE containers
@@ -32,5 +32,5 @@ jobs:
         with:
           package-name: fp-baseimages/distroless
           package-type: container
-          min-versions-to-keep: 10
+          min-versions-to-keep: 1
           delete-only-untagged-versions: true
