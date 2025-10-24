@@ -7,7 +7,7 @@ Basic Usage
 ```Dockerfile
 FROM ghcr.io/navikt/fp-baseimages/chainguard:jre-25
 
-LABEL org.opencontainers.image.source=https://github.com/navikt/ft-inntektsmelding
+LABEL org.opencontainers.image.source=https://github.com/navikt/fp-inntektsmelding
 
 COPY target/classes/logback*.xml conf/
 COPY target/lib/*.jar lib/
@@ -37,13 +37,13 @@ The image sets a set of standard environment variables:
 ENV TZ="Europe/Oslo"
 
 ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
-                      -XX:ActiveProcessorCount=2 \
-                      -XX:MaxRAMPercentage=75 \
-                      -Duser.timezone=Europe/Oslo \
-                      -Duser.language=nb \
-                      -Duser.country=NO \
-                      -Djava.security.egd=file:/dev/urandom \
-                      -Dlogback.configurationFile=conf/logback.xml"
+-XX:ActiveProcessorCount=2 \
+-XX:MaxRAMPercentage=75 \
+-Duser.timezone=Europe/Oslo \
+-Duser.language=nb \
+-Duser.country=NO \
+-Djava.security.egd=file:/dev/urandom \
+-Dlogback.configurationFile=conf/logback.xml"
 ```
 and executes
 ```Dockerfile
