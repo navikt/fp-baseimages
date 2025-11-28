@@ -3,11 +3,15 @@ updates:
   - package-ecosystem: docker
     directory: "/chainguard/jre/"
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       github-actions:
         patterns:
