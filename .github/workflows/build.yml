@@ -60,15 +60,3 @@ jobs:
           tags: ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-  trivy-chainguard-jre:
-    needs: [build-chainguard-jre]
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    name: Trivy
-    uses: navikt/fp-gha-workflows/.github/workflows/trivy.yml@main
-    with:
-      build-version: 'chainguard:jre-25'
-    secrets: inherit
