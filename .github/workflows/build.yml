@@ -56,7 +56,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-${{matrix.version}}
           pull: true
-          push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}}
+          push: ${{ github.ref_name == 'mod' }}
+          tags: ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}}-mod
           cache-from: type=gha
           cache-to: type=gha,mode=max
