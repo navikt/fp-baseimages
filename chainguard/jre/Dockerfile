@@ -11,6 +11,7 @@ ENV TZ="Europe/Oslo"
 
 ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
 -XX:MaxRAMPercentage=75 \
+-XX:+UseG1GC \
 -Duser.timezone=Europe/Oslo \
 -Duser.language=nb \
 -Duser.country=NO \
