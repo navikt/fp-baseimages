@@ -10,7 +10,7 @@ WORKDIR /app
 ENV TZ="Europe/Oslo"
 
 ENV JDK_JAVA_OPTIONS="-XX:+PrintCommandLineFlags \
--XX:ActiveProcessorCount=2 \
+-XX:+UseG1GC \
 -XX:MaxRAMPercentage=75 \
 -Duser.timezone=Europe/Oslo \
 -Duser.language=nb \
