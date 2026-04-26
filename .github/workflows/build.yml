@@ -22,21 +22,27 @@ jobs:
       id-token: write
     strategy:
       matrix:
-        version: [ '21', '25']
+        include:
+          - upstream_tag: 'openjdk-25'
+            fp_tag: 'jre-25'
+          - upstream_tag: 'openjdk-26'
+            fp_tag: 'jre-26'
+          - upstream_tag: 'latest'
+            fp_tag: 'jre-latest'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6 # ratchet:exclude
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v4
+        uses: docker/setup-qemu-action@v4 # ratchet:exclude
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@v4 # ratchet:exclude
 
       # Publisering på ghcr
       - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # ratchet:docker/login-action@v4.1.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -50,13 +56,13 @@ jobs:
           team: teamforeldrepenger
 
       - name: Build and push
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v7 # ratchet:exclude
         with:
           context: chainguard/jre
           platforms: linux/amd64,linux/arm64
-          build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-${{matrix.version}}
+          build-args: BASE_IMAGE=europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:${{matrix.upstream_tag}}
           pull: true
           push: ${{ github.ref_name == 'master' }}
-          tags: ghcr.io/${{ github.repository }}/chainguard:jre-${{matrix.version}}
+          tags: ghcr.io/${{ github.repository }}/chainguard:${{matrix.fp_tag}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
