@@ -11,26 +11,10 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Delete old java containers
-        uses: actions/delete-package-versions@e5bc658cc4c965c472efe991f8beea3981499c55 # ratchet:actions/delete-package-versions@v5.0.0
-        with:
-          package-name: fp-baseimages/java
-          package-type: container
-          min-versions-to-keep: 1
-          delete-only-untagged-versions: true
-
       - name: Delete old chainguard JRE containers
         uses: actions/delete-package-versions@e5bc658cc4c965c472efe991f8beea3981499c55 # ratchet:actions/delete-package-versions@v5.0.0
         with:
           package-name: fp-baseimages/chainguard
           package-type: container
-          min-versions-to-keep: 10
-          delete-only-untagged-versions: true
-
-      - name: Delete old distroless containers
-        uses: actions/delete-package-versions@e5bc658cc4c965c472efe991f8beea3981499c55 # ratchet:actions/delete-package-versions@v5.0.0
-        with:
-          package-name: fp-baseimages/distroless
-          package-type: container
-          min-versions-to-keep: 1
+          min-versions-to-keep: 15
           delete-only-untagged-versions: true
