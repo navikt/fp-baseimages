@@ -2,7 +2,7 @@
 Base docker image brukt i alle Foreldrepenger apper.
 
 Tilgjengelige images:
-* Chainguard OpenJdk JRE 21, 25 ([`chainguard/jre/`](chainguard/jre))
+* Chainguard OpenJdk JRE 25, 26, latest ([`chainguard/jre/`](chainguard/jre))
 
 ## Bygg lokalt
 ```shell script
