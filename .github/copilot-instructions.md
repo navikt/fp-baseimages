@@ -12,7 +12,7 @@ Base Docker images for Team Foreldrepenger backend applications.
 | Topic              | Details                                                                                       |
 |--------------------|-----------------------------------------------------------------------------------------------|
 | Role               | Provides the shared Chainguard-based JRE images used in backend Dockerfiles                   |
-| Published tags     | `jre-25`, `jre-26`, `latest`                                                                  |
+| Published tags     | `jre-25`, `jre-27`                                                                            |
 | Consumers          | Foreldrepenger backend application images                                                     |
 | Special constraint | Distroless and minimal base images; do not assume shell tools or extra packages are available |
 
