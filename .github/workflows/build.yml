@@ -27,7 +27,8 @@ jobs:
             fp_tag: 'jre-25'
           - upstream_tag: 'openjdk-27'
             fp_tag: 'jre-27'
-          # upstream_tag: 'latest' fp_tag: 'jre-latest'
+          - upstream_tag: 'latest'
+            fp_tag: 'jre-latest'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
